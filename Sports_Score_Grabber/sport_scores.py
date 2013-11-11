@@ -4,7 +4,6 @@ import urllib2
 import sys
 from bs4 import BeautifulSoup
 import re
-from Tkinter import *
 
 #Asks user what sport score they want to see
 def getUserPreference():
@@ -53,15 +52,9 @@ def getData( HTMLpage):
 		print homeTeam + ": " + homeScore
 		print "------------------------"
 
-root = Tk()
-root.title("Simple GUI")
-root.geometry("200x100")
-
-root.mainloop()
 
 #Main program
-"""
 sport = getUserPreference()
 htmlPage = getHTML(sport)
 getData(htmlPage)
-"""
+
