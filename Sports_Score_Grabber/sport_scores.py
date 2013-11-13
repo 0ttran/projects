@@ -35,6 +35,7 @@ def getScore( scoreHTML ):
 
 #Runs main program, gets team name and score
 def getData( HTMLpage):
+	gameCheck = 0
 	print "------------------------"
 	parsed_html = BeautifulSoup(htmlPage)
 	for scores in parsed_html.findAll('tr', attrs={'class': 'game   link'}):
@@ -51,10 +52,14 @@ def getData( HTMLpage):
 		print awayTeam + ": " + awayScore
 		print homeTeam + ": " + homeScore
 		print "------------------------"
+		gameCheck = 1
+	
+	if gameCheck == 0:
+		print "No scores/games right now!"
+		print "------------------------"
 
 
 #Main program
 sport = getUserPreference()
 htmlPage = getHTML(sport)
 getData(htmlPage)
-
