@@ -33,12 +33,8 @@ def getScore( scoreHTML ):
 	scoreHTML = re.sub('<[^>]+>', '', scoreHTML)
 	return scoreHTML
 
-#Runs main program, gets team name and score
-def getData( HTMLpage):
-	gameCheck = 0
-	print "------------------------"
-	parsed_html = BeautifulSoup(htmlPage)
-	for scores in parsed_html.findAll('tr', attrs={'class': 'game   link'}):
+#Searches for scores and prints if finds scores
+def fetch( scores ):
 		awayTeamHTML  = scores.find('td', attrs={'class': 'away'})
 		awayScoreHTML = scores.find('span', attrs={'class': 'away'})
 		awayTeam      = getName(awayTeamHTML)
@@ -52,6 +48,20 @@ def getData( HTMLpage):
 		print awayTeam + ": " + awayScore
 		print homeTeam + ": " + homeScore
 		print "------------------------"
+
+#Runs main program, gets team name and score
+def getData( HTMLpage):
+	gameCheck = 0
+	print "------------------------"
+	parsed_html = BeautifulSoup(htmlPage)
+
+	for scores in parsed_html.findAll('tr', attrs={'class': 'game live link'}):
+		print "***LIVE GAME***"
+		fetch(scores)
+		gameCheck = 1
+
+	for scores in parsed_html.findAll('tr', attrs={'class': 'game   link'}):
+		fetch(scores)
 		gameCheck = 1
 	
 	if gameCheck == 0:
@@ -60,6 +70,14 @@ def getData( HTMLpage):
 
 
 #Main program
-sport = getUserPreference()
-htmlPage = getHTML(sport)
-getData(htmlPage)
+userChoice = "y"
+while userChoice != "n":
+	sport = getUserPreference()
+	htmlPage = getHTML(sport)
+	getData(htmlPage)
+
+	userChoice = raw_input("Do you want to search another sport? ('y' or 'n')? ")
+
+	if userChoice == "n":
+		break
+
